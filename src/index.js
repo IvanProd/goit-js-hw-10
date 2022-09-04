@@ -1,6 +1,7 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
 import { fetchCountries } from './fetchCountries';
+import { Notify } from 'notiflix';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -15,6 +16,6 @@ function onInput(event){
     if(inputText === ""){
         return
     }
-    fetchCountries(inputText);
+    fetchCountries(inputText.trim());
 };
 
