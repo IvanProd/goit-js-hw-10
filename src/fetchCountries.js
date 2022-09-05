@@ -1,13 +1,17 @@
+
+const filterBy = "name,capital,population,flags,languages"
+
+
 function fetchCountries(name){
-    fetch(`https://restcountries.com/v3.1/name/${name}`)
+    return fetch(`https://restcountries.com/v3.1/name/${name}?fields=${filterBy}`)
     .then(response =>{
         if(!response.ok){
             throw new Error(response.status);
-        }return response.json();
+        }
+        return response.json();
     }).catch(error => {
         console.log(error);
     });
 };
-
 
 export {fetchCountries};

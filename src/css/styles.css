@@ -20,3 +20,14 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+.country-list_item{
+  display: flex;
+  text-decoration: none;
+  margin-bottom: 10px;
+  /*outline: 1px solid grey;*/
+}
+.countryName{
+  margin-left: 15px;
+  font-size: 20px;
+  /*outline: 1px solid green;*/
+}
