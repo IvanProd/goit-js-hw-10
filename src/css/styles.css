@@ -24,6 +24,7 @@ body {
   display: flex;
   text-decoration: none;
   margin-bottom: 10px;
+  padding-left: calc(100% / 3);
   /*outline: 1px solid grey;*/
 }
 .countryName{

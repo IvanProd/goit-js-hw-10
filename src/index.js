@@ -7,7 +7,7 @@ const DEBOUNCE_DELAY = 300;
 
 const inputField = document.querySelector('#search-box');
 const countryList = document.querySelector('.country-list');
-const countryInfo = document.querySelector('country-info');
+const countryInfo = document.querySelector('.country-info');
 
 
 inputField.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
@@ -15,28 +15,23 @@ inputField.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 function onInput(event){
     const inputText = event.target.value;
     if(inputText === ""){
+        clearDysplay()
         return;
     }
     
     fetchCountries(inputText.trim()).then(countries => checkingQuantityInAnswer(countries))
-    .catch(error =>console.log(error), Notify.failure('Oops, there is no country with that name'));
+    .catch(error => Notify.failure('Oops, there is no country with that name'));
     
     function checkingQuantityInAnswer(reply){
-        console.log(reply)
         if(reply.length > 10){
             Notify.info("Too many matches found. Please enter a more specific name.");
             return;
-        };
-        
-        giveDataState(reply);
-    };
-    
-    function giveDataState(data){
-        console.log(data)
-        if(data.length === 1){
-            displayMarkup(data);
+        } else if(reply.length === 1) {
+            clearDysplay()
+            displayMarkup(reply);
+        } else {
+            displayListMarkup(reply);
         }
-        displayListMarkup(data);
     };
     
     function displayListMarkup(datas){
@@ -51,10 +46,10 @@ function onInput(event){
     };
     
     function displayMarkup(data){
-        const language = countryLanguages(data.languages);
+        const language = data.languages;
         const markup = data.map(country => {
             return `<div class="header-block">
-            <img src="${country.flags.svg}" alt="flag of ${country.name.common}" class="header-block_img" width="50">
+            <img src="${country.flags.svg}" alt="flag of ${country.name.common}" class="header-block_img" width="100">
             <h1 class="header-block_text">${country.name.common}</h1>
           </div>
           <p><b>Name official</b>: ${country.name.official}</p>
@@ -64,16 +59,21 @@ function onInput(event){
           <p><b>Population</b>: ${country.population}</p>
           `;
           }).join('');
-          console.log(language)
+        
         countryInfo.innerHTML = markup;
     };
+
     
-};
-function countryLanguages(languages) {
-    const langs = [];
-    for (let key in languages) {
-      langs.push(languages[key]);
+    function countryLanguages(languages) {
+        const langs = [];
+        for (let key in languages) {
+        return langs.push(languages[key]);
+        }
+        console.log(langs);
+        return langs;
     }
-    console.log(langs);
-    return langs;
-  }
+};
+function clearDysplay(){
+    countryList.innerHTML = "";
+    countryInfo.innerHTML = "";
+}
