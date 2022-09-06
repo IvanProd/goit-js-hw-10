@@ -20,7 +20,7 @@ function onInput(event){
     }
     
     fetchCountries(inputText.trim()).then(countries => checkingQuantityInAnswer(countries))
-    .catch(error => Notify.failure('Oops, there is no country with that name'));
+    .catch(error =>Notify.failure('Oops, there is no country with that name'));
     
     function checkingQuantityInAnswer(reply){
         if(reply.length > 10){
@@ -46,8 +46,8 @@ function onInput(event){
     };
     
     function displayMarkup(data){
-        const language = data.languages;
         const markup = data.map(country => {
+            const language = countryLanguage(country.languages);
             return `<div class="header-block">
             <img src="${country.flags.svg}" alt="flag of ${country.name.common}" class="header-block_img" width="100">
             <h1 class="header-block_text">${country.name.common}</h1>
@@ -59,17 +59,15 @@ function onInput(event){
           <p><b>Population</b>: ${country.population}</p>
           `;
           }).join('');
-        
         countryInfo.innerHTML = markup;
     };
 
     
-    function countryLanguages(languages) {
+    function countryLanguage(languages) {
         const langs = [];
         for (let key in languages) {
-        return langs.push(languages[key]);
+            langs.push(languages[key]);
         }
-        console.log(langs);
         return langs;
     }
 };
